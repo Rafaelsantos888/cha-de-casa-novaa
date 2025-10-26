@@ -1,185 +1,135 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chá de Casa Nova da Raff</title>
-<style>
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #A27FFF; /* roxo suave */
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-
-  h1 {
-    padding: 20px;
-    font-size: 2em;
-  }
-
-  p {
-    font-size: 1.2em;
-    margin: 0 20px 20px 20px;
-  }
-
-  #presentes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0 10px;
-  }
-
-  .presente {
-    background-color: #C6A8FF; /* lilás claro */
-    color: #000;
-    margin: 10px;
-    padding: 15px;
-    border-radius: 10px;
-    min-width: 200px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .presente:hover {
-    background-color: #E1CBFF;
-  }
-
-  #confirmacao {
-    margin-top: 30px;
-    padding: 20px;
-  }
-
-  input[type="text"] {
-    padding: 8px;
-    border-radius: 5px;
-    border: none;
-    margin-right: 10px;
-    width: 150px;
-  }
-
-  button {
-    padding: 8px 12px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chá de Casa Nova</title>
+    <style>
+        body {
+            background-color: #9b59b6; /* roxo suave */
+            font-family: Arial, sans-serif;
+            color: #fff;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        label, input, button, select {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        input, select {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background-color: #fff;
+            color: #9b59b6;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
+    <h1>Chá de Casa Nova</h1>
+    <div class="container">
+        <h2>Escolha seu presente</h2>
+        <label for="name">Seu nome:</label>
+        <input type="text" id="name" placeholder="Digite seu nome">
+        
+        <label for="present">Escolha um presente:</label>
+        <select id="present">
+            <option value="">--Selecione--</option>
+            <option>Boleira de vidro</option>
+            <option>Boleira de plástico roxo ou preto</option>
+            <option>Jogo de prato</option>
+            <option>Jogo de taças</option>
+            <option>Jogo de xícaras</option>
+            <option>Kit caneca</option>
+            <option>Travessa de vidro média</option>
+            <option>Travessa de vidro grande</option>
+            <option>Travessa de vidro pequena</option>
+            <option>Panela de pressão</option>
+            <option>Jogos de pano de prato</option>
+            <option>Kit de depósitos</option>
+            <option>Jarra de vidro</option>
+            <option>Garrafa de café</option>
+            <option>Jogo de lençol</option>
+            <option>Conjunto de tapete</option>
+            <option>Kit toalha de banho</option>
+            <option>Lixeira</option>
+            <option>Kit marmita</option>
+            <option>Kit de assadeira</option>
+            <option>Forma de bolo</option>
+            <option>Cuscuzeira</option>
+            <option>Cobertor</option>
+            <option>Edredom</option>
+            <option>Kit de espátula de silicone</option>
+            <option>Kit de Potes de mantimentos de vidro com tampa de bambu</option>
+            <option>Jogo de pia</option>
+            <option>Escorredor de macarrão</option>
+            <option>Processador de alimentos</option>
+            <option>Espremedor de batata</option>
+            <option>Kit pia</option>
+            <option>Kit de tapete de banheiro</option>
+            <option>Kit depósito</option>
+            <option>Kit prato de vidro</option>
+            <option>Kit panela</option>
+            <option>Fruteira</option>
+            <option>Conjunto de tigela de vidro com tampa</option>
+            <option>Panos de chão 3 unidades</option>
+            <option>Kit lavanderia</option>
+            <option>Kit panos de pratos</option>
+            <option>Pix (ilimitado)</option>
+        </select>
+        <button onclick="choosePresent()">Escolher presente</button>
 
-<h1>Chá de Casa Nova da Raff</h1>
-<p>Escolha um presente para nos ajudar a montar nosso novo lar! 💕</p>
+        <h2>Confirmar presença</h2>
+        <label for="guestName">Seu nome:</label>
+        <input type="text" id="guestName" placeholder="Digite seu nome">
+        <button onclick="confirmPresence()">Confirmar presença</button>
+    </div>
 
-<div id="presentes"></div>
+    <script>
+        let chosen = [];
 
-<div id="confirmacao">
-  <h2>Confirme sua presença</h2>
-  <input type="text" id="nomePresenca" placeholder="Seu nome">
-  <button onclick="confirmarPresenca()">Confirmar</button>
-</div>
+        function choosePresent() {
+            const name = document.getElementById("name").value.trim();
+            const present = document.getElementById("present").value;
+            if(!name || !present) {
+                alert("Preencha seu nome e escolha um presente.");
+                return;
+            }
+            if(chosen.includes(present)) {
+                alert("Este presente já foi escolhido.");
+                return;
+            }
+            chosen.push(present);
+            alert(name + " escolheu: " + present);
+        }
 
-<script>
-  // Lista de presentes com quantidade interna (não aparece para convidados)
-  const listaPresentes = [
-    { nome: "Boleira de vidro", unidades: 1 },
-    { nome: "Boleira de plástico roxo ou preto", unidades: 2 },
-    { nome: "Jogo de prato", unidades: 3 },
-    { nome: "Jogo de taças", unidades: 1 },
-    { nome: "Jogo de xícaras", unidades: 2 },
-    { nome: "Kit caneca", unidades: 1 },
-    { nome: "Travessa de vidro média", unidades: 1 },
-    { nome: "Travessa de vidro grande", unidades: 1 },
-    { nome: "Travessa de vidro pequena", unidades: 1 },
-    { nome: "Panela de pressão", unidades: 1 },
-    { nome: "Jogos de pano de prato", unidades: 2 },
-    { nome: "Kit de depósitos", unidades: 3 },
-    { nome: "Jarra de vidro", unidades: 2 },
-    { nome: "Garrafa de café", unidades: 1 },
-    { nome: "Jogo de lençol", unidades: 6 },
-    { nome: "Conjunto de tapete", unidades: 3 },
-    { nome: "Kit toalha de banho", unidades: 2 },
-    { nome: "Lixeira", unidades: 2 },
-    { nome: "Kit marmita", unidades: 1 },
-    { nome: "Kit de assadeira", unidades: 2 },
-    { nome: "Forma de bolo", unidades: 4 },
-    { nome: "Cuscuzeira", unidades: 2 },
-    { nome: "Cobertor", unidades: 3 },
-    { nome: "Edredom", unidades: 2 },
-    { nome: "Kit de espátula de silicone", unidades: 1 },
-    { nome: "Kit de Potes de mantimentos de vidro com tampa de bambu", unidades: 1 },
-    { nome: "Jogo de pia", unidades: 1 },
-    { nome: "Escorredor de macarrão", unidades: 1 },
-    { nome: "Processador de alimentos", unidades: 2 },
-    { nome: "Espremedor de batata", unidades: 1 },
-    { nome: "Kit pia", unidades: 1 },
-    { nome: "Kit de tapete de banheiro", unidades: 4 },
-    { nome: "Kit depósito", unidades: 1 },
-    { nome: "Kit de prato de vidro", unidades: 2 },
-    { nome: "Kit de panela", unidades: 1 },
-    { nome: "Fruteira", unidades: 2 },
-    { nome: "Conjunto de tigela de vidro com tampa", unidades: 2 },
-    { nome: "Panos de chão 3 unidades", unidades: 1 },
-    { nome: "Kit lavanderia", unidades: 1 },
-    { nome: "Kit panos de pratos", unidades: 4 },
-    { nome: "Pix (ilimitado)", unidades: Infinity }
-  ];
-
-  const escolhidos = []; // painel privado
-
-  const presentesDiv = document.getElementById("presentes");
-
-  function atualizarLista() {
-    presentesDiv.innerHTML = "";
-    listaPresentes.forEach((item, index) => {
-      if (item.unidades > 0) { // só mostra se ainda tem unidades
-        const div = document.createElement("div");
-        div.className = "presente";
-        div.textContent = item.nome;
-        div.onclick = () => escolherPresente(index);
-        presentesDiv.appendChild(div);
-      }
-    });
-  }
-
-  function escolherPresente(index) {
-    const nome = prompt("Digite seu nome:");
-    if (nome && nome.trim() !== "") {
-      const item = listaPresentes[index];
-
-      // Verifica se a pessoa já escolheu este item
-      const jaEscolheu = escolhidos.find(e => e.nome === nome.trim() && e.presente === item.nome);
-      if (jaEscolheu) {
-        alert("Você já escolheu este presente.");
-        return;
-      }
-
-      // Registra escolha
-      escolhidos.push({ nome: nome.trim(), presente: item.nome });
-      if (item.unidades !== Infinity) item.unidades--;
-      atualizarLista();
-      console.log("Painel privado:", escolhidos);
-      alert("Obrigado! Seu presente foi registrado.");
-    }
-  }
-
-  function confirmarPresenca() {
-    const nome = document.getElementById("nomePresenca").value;
-    if (nome && nome.trim() !== "") {
-      escolhidos.push({ nome: nome.trim(), presenca: true });
-      console.log("Painel privado:", escolhidos);
-      alert("Presença confirmada! Obrigado.");
-      document.getElementById("nomePresenca").value = "";
-    } else {
-      alert("Digite seu nome para confirmar presença.");
-    }
-  }
-
-  atualizarLista();
-</script>
-
+        function confirmPresence() {
+            const name = document.getElementById("guestName").value.trim();
+            if(!name) {
+                alert("Digite seu nome para confirmar presença.");
+                return;
+            }
+            alert(name + " confirmou presença!");
+        }
+    </script>
 </body>
 </html>
