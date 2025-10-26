@@ -1,135 +1,69 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chá de Casa Nova</title>
-    <style>
-        body {
-            background-color: #9b59b6; /* roxo suave */
-            font-family: Arial, sans-serif;
-            color: #fff;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-        }
-        label, input, button, select {
-            display: block;
-            width: 100%;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-        input, select {
-            padding: 8px;
-            border-radius: 5px;
-            border: none;
-        }
-        button {
-            background-color: #fff;
-            color: #9b59b6;
-            padding: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Painel Admin - Chá de Casa Nova</title>
+<style>
+    body { background-color: #9b59b6; color: #fff; font-family: Arial, sans-serif; padding: 20px; }
+    h1,h2 { text-align: center; }
+    ul { list-style: none; padding-left:0; }
+    li { padding: 5px 0; border-bottom:1px solid rgba(255,255,255,0.3); }
+    label, input, button { display: block; width: 100%; margin-bottom: 15px; font-size: 16px; padding: 8px; border-radius: 5px; border: none; }
+    button { background-color: #fff; color: #9b59b6; font-weight: bold; cursor: pointer; }
+    button:hover { background-color: #f1f1f1; }
+</style>
 </head>
 <body>
-    <h1>Chá de Casa Nova</h1>
-    <div class="container">
-        <h2>Escolha seu presente</h2>
-        <label for="name">Seu nome:</label>
-        <input type="text" id="name" placeholder="Digite seu nome">
-        
-        <label for="present">Escolha um presente:</label>
-        <select id="present">
-            <option value="">--Selecione--</option>
-            <option>Boleira de vidro</option>
-            <option>Boleira de plástico roxo ou preto</option>
-            <option>Jogo de prato</option>
-            <option>Jogo de taças</option>
-            <option>Jogo de xícaras</option>
-            <option>Kit caneca</option>
-            <option>Travessa de vidro média</option>
-            <option>Travessa de vidro grande</option>
-            <option>Travessa de vidro pequena</option>
-            <option>Panela de pressão</option>
-            <option>Jogos de pano de prato</option>
-            <option>Kit de depósitos</option>
-            <option>Jarra de vidro</option>
-            <option>Garrafa de café</option>
-            <option>Jogo de lençol</option>
-            <option>Conjunto de tapete</option>
-            <option>Kit toalha de banho</option>
-            <option>Lixeira</option>
-            <option>Kit marmita</option>
-            <option>Kit de assadeira</option>
-            <option>Forma de bolo</option>
-            <option>Cuscuzeira</option>
-            <option>Cobertor</option>
-            <option>Edredom</option>
-            <option>Kit de espátula de silicone</option>
-            <option>Kit de Potes de mantimentos de vidro com tampa de bambu</option>
-            <option>Jogo de pia</option>
-            <option>Escorredor de macarrão</option>
-            <option>Processador de alimentos</option>
-            <option>Espremedor de batata</option>
-            <option>Kit pia</option>
-            <option>Kit de tapete de banheiro</option>
-            <option>Kit depósito</option>
-            <option>Kit prato de vidro</option>
-            <option>Kit panela</option>
-            <option>Fruteira</option>
-            <option>Conjunto de tigela de vidro com tampa</option>
-            <option>Panos de chão 3 unidades</option>
-            <option>Kit lavanderia</option>
-            <option>Kit panos de pratos</option>
-            <option>Pix (ilimitado)</option>
-        </select>
-        <button onclick="choosePresent()">Escolher presente</button>
 
-        <h2>Confirmar presença</h2>
-        <label for="guestName">Seu nome:</label>
-        <input type="text" id="guestName" placeholder="Digite seu nome">
-        <button onclick="confirmPresence()">Confirmar presença</button>
-    </div>
+<h1>Painel Admin - Chá de Casa Nova</h1>
+<label for="adminPass">Senha:</label>
+<input type="password" id="adminPass" placeholder="Digite a senha">
+<button onclick="checkPass()">Entrar</button>
 
-    <script>
-        let chosen = [];
+<div id="panel" style="display:none;">
+    <h2>Presentes escolhidos:</h2>
+    <ul id="chosenList"></ul>
+    <h2>Presenças confirmadas:</h2>
+    <ul id="presenceList"></ul>
+</div>
 
-        function choosePresent() {
-            const name = document.getElementById("name").value.trim();
-            const present = document.getElementById("present").value;
-            if(!name || !present) {
-                alert("Preencha seu nome e escolha um presente.");
-                return;
-            }
-            if(chosen.includes(present)) {
-                alert("Este presente já foi escolhido.");
-                return;
-            }
-            chosen.push(present);
-            alert(name + " escolheu: " + present);
-        }
+<script>
+const adminPassword = "laryel161021"; // sua senha
 
-        function confirmPresence() {
-            const name = document.getElementById("guestName").value.trim();
-            if(!name) {
-                alert("Digite seu nome para confirmar presença.");
-                return;
-            }
-            alert(name + " confirmou presença!");
-        }
-    </script>
+let presentRecords = [];
+let presenceRecords = [];
+
+// Para testes, você pode adicionar entradas assim:
+// presentRecords.push({name:"Maria", present:"Boleira de vidro"});
+// presenceRecords.push("João");
+
+function checkPass() {
+    const pass = document.getElementById("adminPass").value;
+    if(pass === adminPassword){
+        document.getElementById("panel").style.display = "block";
+        alert("Bem-vindo, admin!");
+        updatePanel();
+    } else {
+        alert("Senha incorreta!");
+    }
+}
+
+function updatePanel(){
+    const chosenList = document.getElementById("chosenList");
+    const presenceList = document.getElementById("presenceList");
+    chosenList.innerHTML = "";
+    presentRecords.forEach(record=>{
+        const li = document.createElement("li");
+        li.textContent = `${record.name} → ${record.present}`;
+        chosenList.appendChild(li);
+    });
+    presenceList.innerHTML = "";
+    presenceRecords.forEach(name=>{
+        const li = document.createElement("li");
+        li.textContent = name;
+        presenceList.appendChild(li);
+    });
+}
+</script>
 </body>
 </html>
